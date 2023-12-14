@@ -1,0 +1,10 @@
+
+services:
+  backend-service:
+    container_name: backend-service
+    build:
+      dockerfile: '.docker/backend.dockerfile'
+      context: .
+    ports:
+      - '8000:8000'
+    command: python manage.py runserver 0.0.0.0:8000
