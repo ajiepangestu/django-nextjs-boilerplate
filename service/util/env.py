@@ -9,7 +9,7 @@ def get_env(env, default=''):
     if output_type is str:
         return get_string(value, default)
 
-    elif output_type is bool:
+    if output_type is bool:
         return get_boolean(value, default)
 
     return get_list(value, default)
