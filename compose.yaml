@@ -1,6 +1,27 @@
 version: '3'
 
 services:
+  database-service:
+    image: mysql:8.0
+    container_name: ${DB_HOST}
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:3306
+    volumes:
+      - database:/var/lib/mysql
+    command: [
+      mysqld,
+      --character-set-server=utf8mb4,
+      --collation-server=utf8mb4_unicode_ci,
+      --wait_timeout=28800,
+      --max_allowed_packet=32505856
+    ]
+
   backend-service:
     container_name: backend-service
     build:
@@ -9,6 +30,8 @@ services:
     ports:
       - '8000:8000'
     command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - database-service
 
   frontend-service:
     container_name: frontend-service
@@ -19,5 +42,9 @@ services:
       - 3000:3000
 
 networks:
-  local:
+  default:
+    name: local
     external: true
+
+volumes:
+  database:
