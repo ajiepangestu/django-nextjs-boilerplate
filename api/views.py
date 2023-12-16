@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import models as django_models
 from rest_framework.viewsets import ModelViewSet
 
 from service.util.response import (
@@ -27,7 +27,7 @@ class BaseModelViewSet(ModelViewSet):
                 return send_failed_response(message='Not Found')
 
             return send_success_response(data)
-        
+
         except Exception as error:
             status = 500
             if 'the given query' in str(error):
@@ -60,10 +60,10 @@ class BaseModelViewSet(ModelViewSet):
 
 
 class UserViewSet(BaseModelViewSet):
-    queryset = User.objects.all().order_by('id')
+    queryset = django_models.User.objects.all().order_by('id')
     serializer_class = UserSerializer
 
 
 class GroupViewSet(BaseModelViewSet):
-    queryset = Group.objects.all().order_by('id')
+    queryset = django_models.Group.objects.all().order_by('id')
     serializer_class = GroupSerializer
