@@ -11,61 +11,59 @@ from api.serializers import GroupSerializer, UserSerializer
 class BaseModelViewSet(ModelViewSet):
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
 
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                data = self.get_paginated_response(serializer.data)
 
-        serializer = self.get_serializer(queryset, many=True)
-        return serializer.data
+            else:
+                serializer = self.get_serializer(queryset, many=True)
+                data = serializer.data
+
+            if not data:
+                return send_failed_response(message='Not Found')
+
+            return send_success_response(data)
+        
+        except Exception as error:
+            status = 500
+            if 'the given query' in str(error):
+                status = 404
+
+            return send_failed_response(
+                status=status,
+                message=str(error)
+            )
 
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return serializer.data
+        try:
+            instance = self.get_object()
+            serializer = self.get_serializer(instance)
+            data = serializer.data
+            if not data:
+                return send_failed_response(message='Not Found')
+
+            return send_success_response(data)
+
+        except Exception as error:
+            status = 500
+            if 'the given query' in str(error):
+                status = 404
+
+            return send_failed_response(
+                status=status,
+                message=str(error)
+            )
 
 
 class UserViewSet(BaseModelViewSet):
     queryset = User.objects.all().order_by('id')
     serializer_class = UserSerializer
 
-    def list(self, request, *args, **kwargs):
-        try:
-            data = super().list(request, *args, **kwargs)
-            result = send_success_response(data)
-            return result
-
-        except Exception as error:
-            return send_failed_response(message=str(error))
-
-    def retrieve(self, request, *args, **kwargs):
-        try:
-            data = super().retrieve(request, *args, **kwargs)
-            return send_success_response(data)
-
-        except Exception as error:
-            return send_failed_response(message=str(error))
-
 
 class GroupViewSet(BaseModelViewSet):
     queryset = Group.objects.all().order_by('id')
     serializer_class = GroupSerializer
-
-    def list(self, request, *args, **kwargs):
-        try:
-            data = super().list(request, *args, **kwargs)
-            result = send_success_response(data)
-            return result
-
-        except Exception as error:
-            return send_failed_response(message=str(error))
-
-    def retrieve(self, request, *args, **kwargs):
-        try:
-            data = super().retrieve(request, *args, **kwargs)
-            return send_success_response(data)
-
-        except Exception as error:
-            return send_failed_response(message=str(error))
