@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import permissions
+from rest_framework.authentication import (
+    SessionAuthentication,
+    BasicAuthentication
+)
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -30,8 +34,12 @@ SchemaView = get_schema_view(
         contact=openapi.Contact(email="contact@service.local"),
         license=openapi.License(name="BSD License"),
     ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
+    public=False,
+    permission_classes=[permissions.IsAuthenticated],
+    authentication_classes=[
+        SessionAuthentication,
+        BasicAuthentication
+    ]
 )
 
 urlpatterns = [
