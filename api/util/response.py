@@ -1,13 +1,13 @@
 from rest_framework.response import Response
 
 
-def send_success_response(data=None, status=200, message=None):
+def success(data=None, status=200, message=None):
     data = get_data(data)
     result = get_result(data, message)
     return Response(result, status)
 
 
-def send_failed_response(data=None, status=200, message=None):
+def failed(data=None, status=500, message=None):
     data = get_data(data)
     result = get_result(data, message)
     return Response(result, status)
