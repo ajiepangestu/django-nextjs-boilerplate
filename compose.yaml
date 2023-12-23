@@ -4,7 +4,7 @@ services:
   database-service:
     image: mysql:8.0
     container_name: ${DB_HOST}
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USERNAME}
