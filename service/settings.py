@@ -36,11 +36,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -68,6 +70,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'service.wsgi.application'
 
+CORS_ALLOWED_ORIGINS = get_env('CORS_ALLOWED_ORIGINS', ['localhost'])
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
