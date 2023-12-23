@@ -4,6 +4,6 @@ from api.base.views import BaseModelViewSet
 from api.user.serializers import UserSerializer
 
 
-class UserViewSet(BaseModelViewSet):
+class UserView(BaseModelViewSet):
     queryset = django_models.User.objects.all().order_by('id')
     serializer_class = UserSerializer

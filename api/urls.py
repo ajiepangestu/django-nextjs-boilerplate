@@ -4,13 +4,13 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView
 )
 
-from api.user.views import UserViewSet
-from api.group.views import GroupViewSet
+from api.user.views import UserView
+from api.group.views import GroupView
 from api.auth.views import TokenObtainPairView
 
 router = routers.DefaultRouter()
-router.register('user', UserViewSet)
-router.register('group', GroupViewSet)
+router.register('user', UserView)
+router.register('group', GroupView)
 
 urlpatterns = [
     path('', include(router.urls)),
