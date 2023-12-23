@@ -1,6 +1,6 @@
-from api.base.views import TokenViewBase
+from api.views.base import TokenViewBase
 
-from api.auth.serializers import (
+from api.serializers import (
     TokenObtainPairSerializer,
     TokenRefreshSerializer
 )

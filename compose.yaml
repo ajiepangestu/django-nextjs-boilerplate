@@ -38,8 +38,8 @@ services:
   frontend-service:
     container_name: frontend-service
     build:
-      dockerfile: '../.docker/frontend.dockerfile'
-      context: ./webapp
+      dockerfile: '.docker/frontend.dockerfile'
+      context: .
     ports:
       - 3000:3000
     volumes:

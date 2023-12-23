@@ -1,11 +1,11 @@
 from django.urls import include, path
 from rest_framework import routers
 
-from api.user.views import UserView
-from api.group.views import GroupView
-from api.auth.views import (
+from api.views import (
     TokenObtainPairView,
-    TokenRefreshView
+    TokenRefreshView,
+    UserView,
+    GroupView
 )
 
 router = routers.DefaultRouter()

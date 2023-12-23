@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 )
 from rest_framework_simplejwt.exceptions import TokenError
 
-from api.util.response import (
+from api.utils.response import (
     success,
     failed
 )

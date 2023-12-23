@@ -1,7 +1,7 @@
 from django.contrib.auth import models as django_models
 
-from api.base.views import BaseModelViewSet
-from api.user.serializers import UserSerializer
+from api.views.base import BaseModelViewSet
+from api.serializers import UserSerializer
 
 
 class UserView(BaseModelViewSet):
