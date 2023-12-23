@@ -1,5 +1,13 @@
 from rest_framework.viewsets import ModelViewSet
 
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.views import (
+    TokenViewBase as JWTTokenViewBase
+)
+from rest_framework_simplejwt.exceptions import TokenError
+
 from api.util.response import (
     success,
     failed
@@ -55,3 +63,19 @@ class BaseModelViewSet(ModelViewSet):
                 status=status,
                 message=str(error)
             )
+
+
+class TokenViewBase(JWTTokenViewBase):
+    def post(self, request: Request, *args, **kwargs) -> Response:
+        serializer = self.get_serializer(data=request.data)
+
+        try:
+            serializer.is_valid(raise_exception=True)
+
+        except TokenError as e:
+            return failed(status=401, message=e.args[0])
+
+        except AuthenticationFailed as e:
+            return failed(status=401, message=str(e))
+
+        return success(data=serializer.validated_data)

@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg'
+    'drf_yasg',
+    'rest_framework_simplejwt.token_blacklist'
 ]
 
 MIDDLEWARE = [
@@ -170,5 +171,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'TOKEN_OBTAIN_SERIALIZER': 'api.auth.serializers.TokenObtainPairSerializer'
+    'TOKEN_OBTAIN_SERIALIZER': 'api.auth.serializers.TokenObtainPairSerializer',
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True
 }
