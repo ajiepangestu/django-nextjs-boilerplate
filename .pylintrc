@@ -2,7 +2,7 @@
 [MASTER]
 load-plugins=pylint_django
 django-settings-module=service.settings
-disable=C0114,C0115,C0116,W0718
+disable=C0114,C0115,C0116,W0718,W0223
 
 [DESIGN]
 max-parents=15
