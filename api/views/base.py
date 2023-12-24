@@ -1,5 +1,4 @@
 from rest_framework.viewsets import ModelViewSet as RestModelViewSet
-
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
