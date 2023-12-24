@@ -1,4 +1,4 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet as RestModelViewSet
 
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -11,7 +11,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from api.utils import response
 
 
-class BaseModelViewSet(ModelViewSet):
+class ModelViewSet(RestModelViewSet):
 
     def list(self, request, *args, **kwargs):
         try:
