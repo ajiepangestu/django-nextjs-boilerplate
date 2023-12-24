@@ -1,30 +1,12 @@
 from rest_framework.response import Response
 
 
-def success(data=None, status=200, message=None):
-    data = get_data(data)
-    result = get_result(data, message)
-    return Response(result, status)
-
-
-def failed(data=None, status=500, message=None):
-    data = get_data(data)
-    result = get_result(data, message)
-    return Response(result, status)
-
-
-def get_data(data=None):
+def response(data=None, status=200, message=None):
     if data in [None, '']:
         data = []
 
     if not isinstance(data, list):
         data = [data]
 
-    return data
-
-
-def get_result(data, message):
-    return {
-        'data': data,
-        'message': message
-    }
+    result = {'data': data, 'message': message}
+    return Response(result, status)

@@ -8,10 +8,7 @@ from rest_framework_simplejwt.views import (
 )
 from rest_framework_simplejwt.exceptions import TokenError
 
-from api.utils.response import (
-    success,
-    failed
-)
+from api.utils import response
 
 
 class BaseModelViewSet(ModelViewSet):
@@ -30,16 +27,16 @@ class BaseModelViewSet(ModelViewSet):
                 data = serializer.data
 
             if not data:
-                return failed(message='Not Found')
+                return response(status=404, message='Not Found')
 
-            return success(data)
+            return response(data=data)
 
         except Exception as error:
             status = 500
             if 'the given query' in str(error):
                 status = 404
 
-            return failed(
+            return response(
                 status=status,
                 message=str(error)
             )
@@ -50,16 +47,19 @@ class BaseModelViewSet(ModelViewSet):
             serializer = self.get_serializer(instance)
             data = serializer.data
             if not data:
-                return failed(message='Not Found')
+                return response(
+                    status=404,
+                    message='Not Found'
+                )
 
-            return success(data)
+            return response(data=data)
 
         except Exception as error:
             status = 500
             if 'the given query' in str(error):
                 status = 404
 
-            return failed(
+            return response(
                 status=status,
                 message=str(error)
             )
@@ -73,9 +73,15 @@ class TokenViewBase(JWTTokenViewBase):
             serializer.is_valid(raise_exception=True)
 
         except TokenError as e:
-            return failed(status=401, message=e.args[0])
+            return response(
+                status=401,
+                message=e.args[0]
+            )
 
         except AuthenticationFailed as e:
-            return failed(status=401, message=str(e))
+            return response(
+                status=401,
+                message=str(e)
+            )
 
-        return success(data=serializer.validated_data)
+        return response(data=serializer.validated_data)
