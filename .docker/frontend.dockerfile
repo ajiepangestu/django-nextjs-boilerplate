@@ -2,8 +2,10 @@ FROM node:18-alpine
 
 WORKDIR /code
 
-COPY package.json .
-COPY yarn.lock .
+COPY ./webapp/package.json .
+COPY ./webapp/yarn.lock .
+COPY .env .
+
 RUN yarn --frozen-lockfile
 
 CMD ["yarn", "dev"]

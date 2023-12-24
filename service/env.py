@@ -16,7 +16,7 @@ def get_env(env, default=''):
 
 
 def get_boolean(value, default):
-    if not value:
+    if value is None:
         return default
 
     if str(value).lower() == 'true':
