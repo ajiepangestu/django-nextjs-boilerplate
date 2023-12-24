@@ -27,7 +27,10 @@ class BaseModelViewSet(ModelViewSet):
                 data = serializer.data
 
             if not data:
-                return response(status=404, message='Not Found')
+                return response(
+                    status=404,
+                    message='Not Found'
+                )
 
             return response(data=data)
 
