@@ -15,9 +15,9 @@ class TokenObtainPairSerializer(JWTTokenObtainPairSerializer):
 
         refresh = self.get_token(self.user)
 
-        data["refresh"] = str(refresh)
-        data["access"] = str(refresh.access_token)
-        data["expired"] = refresh.payload.get('exp')
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+        data['expired'] = refresh.payload.get('exp')
 
         if api_settings.UPDATE_LAST_LOGIN:
             update_last_login(None, self.user)
@@ -28,11 +28,9 @@ class TokenObtainPairSerializer(JWTTokenObtainPairSerializer):
 class TokenRefreshSerializer(JWTTokenRefreshSerializer):
 
     def validate(self, attrs: Dict[str, Any]) -> Dict[str, str]:
-        refresh = self.token_class(attrs["refresh"])
+        refresh = self.token_class(attrs['refresh'])
 
-        data = {"access": str(refresh.access_token)}
-        print(f'{api_settings.BLACKLIST_AFTER_ROTATION}')
-        print(f'{api_settings.ROTATE_REFRESH_TOKENS}')
+        data = {'access': str(refresh.access_token)}
 
         if api_settings.ROTATE_REFRESH_TOKENS:
             if api_settings.BLACKLIST_AFTER_ROTATION:
@@ -48,7 +46,7 @@ class TokenRefreshSerializer(JWTTokenRefreshSerializer):
             refresh.set_exp()
             refresh.set_iat()
 
-            data["refresh"] = str(refresh)
-            data["expired"] = refresh.payload.get('exp')
+            data['refresh'] = str(refresh)
+            data['expired'] = refresh.payload.get('exp')
 
         return data
