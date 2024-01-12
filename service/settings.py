@@ -88,6 +88,11 @@ if DB_CONFIG.get('ENGINE') != 'django.db.backends.sqlite3':
         'PORT': get_env('DB_PORT', '3306')
     })
 
+else:
+    DB_CONFIG.update({
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+    })
+
 DATABASES = {
     'default': DB_CONFIG
 }
